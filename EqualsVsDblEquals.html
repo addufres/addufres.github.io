@@ -2,9 +2,30 @@
 <html>
   <head>
     <link rel="stylesheet" href="addufresStylesheet.css">
-    <title>When to use "=" vs. "=="</title>
+    <title>When to use "=" vs. "==" vs. ".equals"</title>
   </head>
   <body>
     <h1>Not all signs are created ==</h1>
+    <p>Contrary to what we all were taught growing up in math class, this '='
+      sign is not the sign for equals in Java. At least not in the way we are
+      all used to.</p>
+    <p>Each of these signs
+      <ul>
+        <li>=</li>
+        <li>==</li>
+        <li>.equals</li>
+      </ul>
+      either compare or create.</p>
+    <p>Starting with "=". <br>This symbol when used in Java programming is used
+      as an initializer. For example the picture below shows this symbol being
+      used to initialize a variable. It connects the name of the variable to the
+      variables assigned value.<br><img src="../images/Var-init-screenshot.png"></p>
+    <p>The difference between "=" and the others is that "=" is the only one not
+      comparing two values. <br>"==" is used to compare two integers be that an
+      int or a double. It compares the two values for their equality. This can be
+      below in the picture <br><img src="../images/comparing-numbers-screenshot.png"></p>
+    <p>Last but definitely equal to the others is ".equals". This is used to compare
+      the equality of two strings. An example of this would look something like
+      this picture below. <br><img src="../images/comparing-string-screenshot"></p>
   </body>
 </html>

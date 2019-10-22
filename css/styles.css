@@ -59,6 +59,8 @@ body {
 textarea {
   resize: none;
   margin-left: -3%;
+  max-width: 90vw;
+  min-height: fit-content;
 }
 
 /*

@@ -203,8 +203,8 @@ ol > li {
 }
 
 .full-width {
-  width: 100vw;
-  margin-left: -560px;
+  margin: auto;
+  width: 100%;
 }
 
 /*

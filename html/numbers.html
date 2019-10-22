@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Base head metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Page title -->
+    <title>MAKING API CALLS FUN!</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Optional JQUERY and JS stuff to help make life a little easier -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+    <!-- Custom CSS -->
+    <link href="../css/styles.css" rel="stylesheet" type="text/css" media="all">
+</head>
+
+<body class="text-center">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <header class="masthead mb-auto">
+            <div class="inner">
+                <h3 class="masthead-brand"><a href="../index.html">MAKING API CALLS FUN!</a></h3>
+                <button class="btn btn-secondary my-2 my-sm-0" type="button" onclick="getFact()">
+                    CLICK ME TO GET A NEW FACT ABOUT NUMBERS!
+                </button>
+                <nav class="nav nav-masthead justify-content-center">
+                    <a class="nav-link" href="../index.html">HOME</a>
+                    <a class="nav-link" href="swapi.html">SWAPI</a>
+                    <a class="nav-link" href="jokes.html">Dad Joke's</a>
+                    <a class="nav-link active" href="index.html">CLICK ME...</a>
+                </nav>
+            </div>
+        </header>
+
+       <main role="main" class="inner cover">
+            <h1 class="cover-heading">NUMBERS API's</h1>
+        </main>
+
+        <div id="fun-fact"></div>
+
+        <footer class="mastfoot mt-auto">
+            <div class="inner">
+                <p>Follow me on <a href="https://www.linkedin.com/in/andrewdufresne13/" target="_blank">LinkedIn</a></p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        var counter = 0;
+
+        getFact = function() {
+            $(function(){
+                $.get('http://numbersapi.com/random', function(data) {
+                    counter++;
+                    if(counter % 2 === 0) {
+                        $('#fun-fact').prepend("<li> <h3 class='angle-left'> " + data + " </h3> </li>");
+                    } else {
+                        $('#fun-fact').prepend("<li> <h3 class='angle-right'> " + data + " </h3> </li>");
+                    }
+                });
+            });
+
+            if(counter > 100) {
+                $('#fun-fact').empty();
+                counter = 0
+            }
+        }
+
+
+
+    </script>
+
+
+
+</body>
+
+</html>

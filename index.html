@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Base head metadata -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Page title -->
+  <title>MAKING API CALLS FUN!</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <!-- Custom CSS -->
+  <link href="css/styles.css" rel="stylesheet" type="text/css" media="all">
+  <!-- Glide Carousel -->
+  <script src="js/glide.js"></script>
+  <link rel="stylesheet" href="css/glide.core.css" type="text/css" media="all">
+  <link rel="stylesheet" href="css/glide.theme.css" type="text/css" media="all">
+</head>
+
+<body class="text-center">
+  <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+    <header class="masthead mb-auto">
+      <div class="inner">
+        <h3 class="masthead-brand"><a href="#">MAKING API CALLS FUN!</a></h3>
+        <nav class="nav nav-masthead justify-content-center">
+            <a class="nav-link active" href="#">HOME</a>
+          <a class="nav-link" href="html/swapi.html">SWAPI</a>
+          <a class="nav-link" href="html/jokes.html">Dad Joke's</a>
+          <a class="nav-link" href="html/numbers.html">CLICK ME...</a>
+        </nav>
+      </div>
+    </header>
+
+    <main role="main" class="inner cover">
+      <h1 class="cover-heading">API's</h1>
+      <p class="lead">Welcome to an awesome little example site to showcase some free and easy to implement API's. None
+        of these API's require any authentication or registration with the API endpoint in order to implement them. This
+        makes them great for new developers and people looking to just play around with fun API's to include in their
+        sites.</p>
+      <p class="lead">
+        <a href="https://www.github.com/addufres" target="_blank" class="btn btn-lg btn-secondary">Learn more about my
+          other cooler
+          projects here!</a>
+      </p>
+    </main>
+
+    <main role="main" class="inner cover">
+        <div class="glide">
+          <div class="glide__track" data-glide-el="track">
+            <ul class="glide__slides">
+              <li class="glide__slide"><img class="fiddy-percent" src="img/1.PNG" alt="Slide 1"></li>
+              <li class="glide__slide"><img class="fiddy-percent" src="img/2.PNG" alt="Slide 2"></li>
+              <li class="glide__slide"><img class="fiddy-percent" src="img/3.PNG" alt="Slide 3"></li>
+              <li class="glide__slide"><img class="fiddy-percent" src="img/4.PNG" alt="Slide 4"></li>
+              <li class="glide__slide"><img class="fiddy-percent" src="img/5.PNG" alt="Slide 5"></li>
+            </ul>
+          </div>
+
+          <div class="glide__arrows" data-glide-el="controls">
+            <button class="glide__arrow glide__arrow--left" data-glide-dir="<">prev</button>
+            <button class="glide__arrow glide__arrow--right" data-glide-dir=">">next</button>
+          </div>
+        </div>
+    </main>
+    <br><br><br><br>
+
+    <div class="map-grid">
+      <h2>Google Maps API Integration</h2>
+
+      <p>In order to use the Maps Embed API from Google you must first register an API key with them.</p><br>
+      <p>An API key is an identifier unique to you used to authenticate requests from your application to the API server for usage.</p><br>
+      <p>Follow the steps below to get your own unique API key and set up your own Google application</p>
+      <ol>
+        <li>
+          <p>Sign into the <a href="https://console.cloud.google.com/google/maps-apis/overview"><strong>Google Cloud Platform Console.</strong></a></p>
+        </li>
+        <li>
+          <p>Create a new project for your API key to be associated to, or select an already created project to associate the API key you will create to. </p>
+        </li>
+        <li>
+          <p>Click the menu button and select APIs & Services > Credentials.</p>
+        </li>
+        <li>
+          <p>On the Credentials page, click Create credentials > API key. The API key created dialog displays your newly created API key.</p>
+        </li>
+        <li>
+          <p>Insert the following code on your webpage to generate your embedded map using your API key created.</p>
+          <textarea rows="3" cols="200" readonly>
+                <iframe src="https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY_GOES_HERE&amp;q=YOUR+SEARCH+QUERY+GOES+HERE" class="map" style="width:100%; height:30vw; margin-top:10%; border:0" allowfullscreen=""></iframe>
+          </textarea>
+        </li>
+      </ol>
+      <iframe src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAy5iGtvYl-Q9TSA7vtOUerJUK4FOvsn5s&amp;q=University+of+Denver" class="map" style="width:100%; height:30vw; margin-top:10%; border:0" allowfullscreen=""></iframe>
+    </div>
+
+    <footer class="mastfoot mt-auto">
+      <div class="inner">
+        <p>Follow me on <a href="https://www.linkedin.com/in/andrewdufresne13/" target="_blank">LinkedIn</a></p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+      var glide = new Glide('.glide', {
+        type: 'slider',
+        perView: 1,
+        focusAt: 'center'
+      })
+
+  glide.mount()
+  </script>
+</body>
+
+</html>

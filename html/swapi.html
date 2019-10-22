@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Base head metadata -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Page title -->
+    <title>MAKING API CALLS FUN!</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <link href="../css/styles.css" rel="stylesheet" type="text/css" media="all">
+    <!-- Optional JQUERY and JS stuff to help make life a little easier -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+</head>
+
+<body class="text-center">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <header class="masthead mb-auto">
+            <div class="inner">
+                <h3 class="masthead-brand"><a href="../index.html">MAKING API CALLS FUN!</a></h3>
+                <nav class="nav nav-masthead justify-content-center">
+                    <a class="nav-link" href="../index.html">HOME</a>
+                    <a class="nav-link active" href="swapi.html">SWAPI</a>
+                    <a class="nav-link" href="jokes.html">Dad Joke's</a>
+                    <a class="nav-link" href="numbers.html">CLICK ME...</a>
+                </nav>
+            </div>
+        </header>
+
+        <main role="main" class="inner cover">
+            <h1 class="cover-heading">STAR WARS API</h1>
+            <p class="lead">This is an easy to implement js library, that allows you to search for and call against an
+                endpoint that searches in a database and returns all the knowledge you could never need to know about
+                the Star Wars universe.</p>
+            <p class="lead">
+                <a href="https://swapi.co/documentation" target="_blank" class="btn btn-lg btn-secondary">Learn more
+                    about this API and read up on its documentation here.</a>
+            </p>
+
+            
+            <form class="center-form form-inline my-2 my-lg-0">
+                <div class="center-form">
+                    <button class="clear-list btn btn-secondary my-2 my-sm-0" onclick="clearLists()">CLEAR LISTS</button><br><br>
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
+                    id="peopleSearch"><br><br>
+                    <button class="btn btn-secondary my-2 my-sm-0" id="peopleButton" type="button"
+                    onclick="searchForPeople()">Search
+                    People</button>
+                </div>
+            </form>
+            
+            <div class="lead" id="peopleListing"></div>
+            <br>
+            <form class="center-form form-inline my-2 my-lg-0">
+                <div class="center-form">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"
+                        id="shipSearch"><br><br>
+                    <button class="btn btn-secondary my-2 my-sm-0" id="shipButton" type="button"
+                        onclick="searchForShips()">Search Ships</button>
+                </div>
+            </form>
+            <div class="lead" id="shipListing"></div>
+        </main>
+
+        <footer class="mastfoot mt-auto">
+            <div class="inner">
+                <p>Follow me on <a href="https://www.linkedin.com/in/andrewdufresne13/" target="_blank">LinkedIn</a></p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        var swapiModule = (function () {
+            var rootURL = "https://swapi.co/api/";
+
+            function request(url, cb) {
+                return fetch(url)
+                    .then(function (res) {
+                        return res.json();
+                    })
+                    .then(function (data) {
+                        if (typeof cb === "function") {
+                            cb(data);
+                        }
+
+                        return data;
+                    })
+                    .catch(function (err) {
+                        console.log(err);
+                    });
+            }
+
+            function getResources(cb) {
+                return request(rootURL, cb);
+            }
+
+            function singularRequestGenerator(path) {
+                return function (id, cb) {
+                    return request(rootURL + path + "/" + id + "/", cb);
+                };
+            }
+
+            function pluralRequestGenerator(path) {
+                return function () {
+
+                    let queryObject = undefined;
+                    let cb = undefined;
+
+                    if (arguments.length > 1) {
+                        queryObject = arguments[0];
+                        cb = arguments[1];
+                    } else if (arguments[0]) {
+                        // If given exactly one argument
+                        if (typeof arguments[0] === "function") {
+                            cb = arguments[0];
+                            queryObject = null;
+                        } else {
+                            cb = null;
+                            queryObject = arguments[0];
+                        }
+                    }
+
+                    if (queryObject) {
+                        let searchParams = new URLSearchParams();
+                        for (let key of Object.keys(queryObject)) {
+                            let value = queryObject[key];
+                            searchParams.append(key, value);
+                        }
+                        return request(rootURL + path + "/?" + searchParams.toString(), cb);
+                    }
+
+                    return request(rootURL + path + "/", cb);
+
+                };
+            }
+
+            return {
+                getResources: getResources,
+                getPerson: singularRequestGenerator("people"),
+                getPeople: pluralRequestGenerator("people"),
+                getFilm: singularRequestGenerator("films"),
+                getFilms: pluralRequestGenerator("films"),
+                getPlanet: singularRequestGenerator("planets"),
+                getPlanets: pluralRequestGenerator("planets"),
+                getSpecies: singularRequestGenerator("species"),
+                getAllSpecies: pluralRequestGenerator("species"),
+                getStarship: singularRequestGenerator("starships"),
+                getStarships: pluralRequestGenerator("starships"),
+                getVehicle: singularRequestGenerator("vehicles"),
+                getVehicles: pluralRequestGenerator("vehicles")
+            };
+        })();
+
+        function searchForPeople() {
+            var searchString = document.getElementById('peopleSearch').value;
+            $('#peopleListing').empty();
+
+            swapiModule.getPeople({
+                search: searchString
+            }, function (data) {
+                console.log("All results that match " + searchString, data);
+
+                // Check if there is data returned and that the data is populated
+                if (data && data.results.length > 0) {
+
+                    var person = {
+                        by: "",
+                        ec: "",
+                        g: "",
+                        hc: "",
+                        h: "",
+                        m: "",
+                        n: "",
+                        sc: ""
+                    }
+                    // Using JQuery API library to get the div of id peopleListing and then inserting this block of html within it using Jquery's append() function. 
+                    $('#peopleListing').append(
+                        " <p class='lead' id='checkFor'>  * BBY = Before the Battle of Yavin. <br> Fun fact, the Battle of Yavin ended with the destruction of the first Death Star.</p>"
+                        );
+
+                    for (var j = 0; j < data.results.length; j++) {
+
+                        person.by = data.results[j].birth_year + "*";
+                        person.ec = data.results[j].eye_color;
+                        person.g = data.results[j].gender;
+                        person.hc = data.results[j].hair_color;
+                        person.h = data.results[j].height + "cm";
+                        person.m = data.results[j].mass + "g";
+                        person.n = data.results[j].name;
+                        person.sc = data.results[j].skin_color;
+
+                        $('#peopleListing').append(" <li> <h3> " + person.n + "</h3> </li>");
+                        $('#peopleListing').append(" <li> Gender : " + person.g + " </li>");
+                        $('#peopleListing').append(" <li> Birth Year : " + person.by + " </li>");
+                        $('#peopleListing').append(" <li> Height : " + person.h + " </li>");
+                        $('#peopleListing').append(" <li> Eye Color: " + person.ec + " </li>");
+                        $('#peopleListing').append(" <li> Hair Color : " + person.hc + " </li>");
+                        $('#peopleListing').append(" <li> Weight : " + person.m + " </li>");
+                        $('#peopleListing').append(" <li> Skin Color: " + person.sc + " </li>");
+
+                    }
+                } else {
+                    $('#peopleListing').append(" <h3> The droids you seek are not found here... </h3>");
+                }
+            });
+        }
+
+        function searchForShips() {
+            var searchString = document.getElementById('shipSearch').value;
+            $('#shipListing').empty();
+
+            swapiModule.getStarships({
+                search: searchString
+            }, function (data) {
+                console.log("All results that match" + searchString, data);
+
+                // Check if there is data returned and that the data is populated
+                if (data && data.results.length > 0) {
+                    var ship = {
+                        m: "",
+                        n: "",
+                        l: "",
+                        man: "",
+                        sp: "",
+                        sc: ""
+                    }
+
+                    for (var j = 0; j < data.results.length; j++) {
+
+                        ship.m = data.results[j].model;
+                        ship.n = data.results[j].name;
+                        ship.l = data.results[j].length + "m";
+                        ship.man = data.results[j].manufacturer;
+                        ship.sp = data.results[j].max_atmosphering_speed + "kph";
+                        ship.sc = data.results[j].starship_class;
+
+                        $('#shipListing').append(" <li> <h3> " + ship.n + " </h3> </li>");
+                        $('#shipListing').append(" <li> Model: " + ship.m + " </li>");
+                        $('#shipListing').append(" <li> Manufacturer: " + ship.man + " </li>");
+                        $('#shipListing').append(" <li> Starship Class: " + ship.sc + " </li>");
+                        $('#shipListing').append(" <li> Length: " + ship.l + " </li>");
+                        $('#shipListing').append(" <li> Max Atmospheric Speed: " + ship.sp + " </li>");
+
+                    }
+                } else {
+                    $('#shipListing').append(" <h3> That ship can't fit in this hanger bay... </h3>");
+                }
+            });
+        }
+    
+        function clearLists() {
+            $('#peopleListing').empty();
+            $('#shipListing').empty();
+        }
+    </script>
+
+
+</body>
+
+</html>

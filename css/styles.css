@@ -134,6 +134,15 @@ li {
   text-align: center;
 }
 
+ol > li {
+  list-style: decimal;
+}
+
+.center-frame {
+  margin: auto;
+  width: 75%;
+}
+
 /*
 * Button Text
 */
